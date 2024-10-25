@@ -15,7 +15,7 @@ def get_professor():
 
 # Rota para listar um professor específico
 @professores_bp.route('/professores/<int:id_professor>', methods=['GET'])
-def get_professor(id_professor):
+def get_professor_by_id(id_professor):
     try:
         professor = professor_por_id(id_professor)
         return jsonify(professor)
