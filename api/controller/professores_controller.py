@@ -27,4 +27,23 @@ def get_professor_by_id(id_professor):
 def create_professor():
     data = request.json
     adicionar_professor(data)
-    return jsonify(data), 201
+    return jsonify({'message': 'Professor criado com sucesso!'}), 201
+
+# Rota para atualizar o professor
+@professores_bp.route('/professores/<int:id_professor>', methods=['PUT'])
+def update_professor(id_professor):
+    novos_dados = request.json
+    try:
+        atualizar_professor(id_professor, novos_dados)
+        return jsonify({'message': 'Professor atualizado com sucesso!'}), 200
+    except ProfessorNaoEncontrado:
+        return jsonify({'message': 'Professor não encontrado'}), 404
+
+# Rota para excluir o professor
+@professores_bp.route('/professores/<int:id_professor>', methods=['DELETE'])
+def delete_professor(id_professor):
+    try:
+        excluir_professor(id_professor)
+        return ({'message': 'Professor deletado com sucesso!'}), 200
+    except ProfessorNaoEncontrado:
+        return jsonify({'message': 'Professor não encontrado'}), 404
